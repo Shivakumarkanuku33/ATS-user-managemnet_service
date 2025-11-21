@@ -1,8 +1,6 @@
 package com.ats.userservice.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import com.ats.userservice.entity.UserStatus;
 
 import lombok.Builder;
 import lombok.Data;
@@ -17,5 +15,6 @@ public class UserResponse {
     private String department;
     private String role;
     private Long employeeId;
+    private UserStatus status;
 }
 

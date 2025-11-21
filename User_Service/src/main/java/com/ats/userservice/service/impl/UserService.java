@@ -1,6 +1,8 @@
 package com.ats.userservice.service.impl;
 
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -8,11 +10,11 @@ import com.ats.userservice.dto.UserRequest;
 import com.ats.userservice.dto.UserResponse;
 import com.ats.userservice.entity.Role;
 import com.ats.userservice.entity.User;
+import com.ats.userservice.entity.UserStatus;
 import com.ats.userservice.exception.ResourceNotFoundException;
 import com.ats.userservice.repository.UserRepository;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +24,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     public UserResponse createUser(UserRequest request) {
-        if (userRepository.existsByUsername(request.getUsername())) {
+    	if (userRepository.existsByUsername(request.getUsername())) {
             throw new IllegalArgumentException("Username already exists");
         }
         if (userRepository.existsByEmail(request.getEmail())) {
@@ -37,6 +39,7 @@ public class UserService {
                 .department(request.getDepartment())
                 .role(Role.valueOf(request.getRole()))
                 .employeeId(request.getEmployeeId())
+                .status(UserStatus.ACTIVE)   // ✅ SET STATUS HERE
                 .deleted(false)
                 .build();
 
@@ -92,6 +95,7 @@ public class UserService {
                 .department(user.getDepartment())
                 .role(user.getRole().name())
                 .employeeId(user.getEmployeeId())
+                .status(user.getStatus())
                 .build();
     }
 }
