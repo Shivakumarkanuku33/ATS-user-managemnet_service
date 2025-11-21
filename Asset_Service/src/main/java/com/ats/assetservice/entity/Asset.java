@@ -19,7 +19,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-//@Builder
+@Builder
 @Entity
 @Table(name = "assets_tbl",uniqueConstraints = @UniqueConstraint(columnNames = "asset_tag"))
 @Data
